@@ -20,6 +20,23 @@
   }
 }
 
+@mixin laptop-and-up {
+  @media (min-width: $laptop) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: $tablet) and (max-width: $laptop) {
+    @content;
+  }
+}
+
+@mixin tablet-and-up {
+  @media (min-width: $tablet) {
+    @content;
+  }
+}
 
 @mixin tablet {
   @media (max-width: $tablet) {
@@ -30,5 +47,89 @@
 @mixin mobile {
   @media (max-width: $mobile) {
     @content;
+  }
+}
+
+@mixin small-mobile {
+  @media (max-width: 350px) {
+    @content;
+  }
+}
+
+// Additional responsive utilities
+@mixin responsive-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @include tablet {
+    padding: 0 1.5rem;
+  }
+  
+  @include mobile {
+    padding: 0 1rem;
+  }
+  
+  @include small-mobile {
+    padding: 0 0.8rem;
+  }
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Grid utilities
+@mixin responsive-grid($min-width: 280px, $gap: 2rem) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  grid-gap: $gap;
+}
+
+// Hide on certain screen sizes
+@mixin hide-on-mobile {
+  @include mobile {
+    display: none;
+  }
+}
+
+@mixin hide-on-desktop {
+  @media (min-width: $tablet) {
+    display: none;
+  }
+}
+
+// Fluid typography
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    font-size: $min-font-size;
+    
+    @media screen and (min-width: $min-vw) {
+      font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+    }
+    
+    @media screen and (min-width: $max-vw) {
+      font-size: $max-font-size;
+    }
   }
 }

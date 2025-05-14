@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { LoadingOutlined } from '@ant-design/icons';
 import { Boundary, MessageDisplay } from '@/components/common';
+import FirebaseIndexMessage from '@/components/common/FirebaseIndexMessage';
 import { ProductGrid } from '@/components/product';
 import { useDidMount } from '@/hooks';
 import PropType from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRequestStatus } from '@/redux/actions/miscActions';
 import { searchProduct } from '@/redux/actions/productActions';
@@ -13,6 +14,9 @@ const Search = ({ match }) => {
   const { searchKey } = match.params;
   const dispatch = useDispatch();
   const didMount = useDidMount(true);
+  const [indexError, setIndexError] = useState(false);
+  const [indexUrl, setIndexUrl] = useState('https://console.firebase.google.com/v1/r/project/main-f8628/firestore/indexes?create_composite=Cktwcm9qZWN0cy9tYWluLWY4NjI4L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9wcm9kdWN0cy9pbmRleGVzL18QARoMCghrZXl3b3JkcxgBGg0KCWRhdGVBZGRlZBACGgwKCF9fbmFtZV9fEAI');
+  
   const store = useSelector((state) => ({
     isLoading: state.app.loading,
     products: state.products.searchedProducts.items,
@@ -21,14 +25,38 @@ const Search = ({ match }) => {
   }));
 
   useEffect(() => {
+    let isSubscribed = true;
+
     if (didMount && !store.isLoading) {
-      dispatch(searchProduct(searchKey));
+      const action = searchProduct(searchKey);
+      const promise = dispatch(action);
+      
+      // Firebase index error detection
+      setTimeout(() => {
+        if (isSubscribed && store.requestStatus && 
+            store.requestStatus.includes('The query requires an index')) {
+          setIndexError(true);
+        }
+      }, 1000);
     }
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [searchKey]);
 
   useEffect(() => () => {
     dispatch(setRequestStatus(''));
   }, []);
+
+  // Display Firebase index message if needed
+  if (indexError) {
+    return (
+      <main className="content">
+        <FirebaseIndexMessage indexUrl={indexUrl} />
+      </main>
+    );
+  }
 
   if (store.requestStatus && !store.isLoading) {
     return (

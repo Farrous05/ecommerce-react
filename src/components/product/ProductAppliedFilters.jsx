@@ -28,91 +28,81 @@ const ProductAppliedFilters = ({ filteredProductsCount }) => {
   };
 
   return !isFiltered ? null : (
-    <>
-      <div className="product-list-header">
-        <div className="product-list-header-title">
-          <h5>
-            {filteredProductsCount > 0
-              && `Found ${filteredProductsCount} ${filteredProductsCount > 1 ? 'products' : 'product'}`}
-          </h5>
+    <div className="product-applied-filters">
+      {filter.keyword && (
+        <div className="pill-wrapper">
+          <span className="d-block">Keyword</span>
+          <div className="pill padding-right-l">
+            <h5 className="pill-content margin-0">{filter.keyword}</h5>
+            <div className="pill-remove" onClick={onRemoveKeywordFilter} role="presentation">
+              <h5 className="margin-0 text-subtle">
+                <CloseCircleOutlined />
+              </h5>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="product-applied-filters">
-        {filter.keyword && (
-          <div className="pill-wrapper">
-            <span className="d-block">Keyword</span>
-            <div className="pill padding-right-l">
-              <h5 className="pill-content margin-0">{filter.keyword}</h5>
-              <div className="pill-remove" onClick={onRemoveKeywordFilter} role="presentation">
-                <h5 className="margin-0 text-subtle">
-                  <CloseCircleOutlined />
-                </h5>
-              </div>
-            </div>
-          </div>
-        )}
-        {filter.brand && (
-          <div className="pill-wrapper">
-            <span className="d-block">Brand</span>
-            <div className="pill padding-right-l">
-              <h5 className="pill-content margin-0">{filter.brand}</h5>
-              <div className="pill-remove" onClick={onRemoveBrandFilter} role="presentation">
-                <h5 className="margin-0 text-subtle">
-                  <CloseCircleOutlined />
-                </h5>
-              </div>
-            </div>
-          </div>
-        )}
-        {(!!filter.minPrice || !!filter.maxPrice) && (
-          <div className="pill-wrapper">
-            <span className="d-block">Price Range</span>
-            <div className="pill padding-right-l">
-              <h5 className="pill-content margin-0">
-                $
-                {filter.minPrice}
-                - $
-                {filter.maxPrice}
+      )}
+      {filter.brand && (
+        <div className="pill-wrapper">
+          <span className="d-block">Brand</span>
+          <div className="pill padding-right-l">
+            <h5 className="pill-content margin-0">{filter.brand}</h5>
+            <div className="pill-remove" onClick={onRemoveBrandFilter} role="presentation">
+              <h5 className="margin-0 text-subtle">
+                <CloseCircleOutlined />
               </h5>
-              <div
-                className="pill-remove"
-                onClick={onRemovePriceRangeFilter}
-                role="presentation"
-              >
-                <h5 className="margin-0 text-subtle">
-                  <CloseCircleOutlined />
-                </h5>
-              </div>
             </div>
           </div>
-        )}
-        {filter.sortBy && (
-          <div className="pill-wrapper">
-            <span className="d-block">Sort By</span>
-            <div className="pill padding-right-l">
-              <h5 className="pill-content margin-0">
-                {filter.sortBy === 'price-desc'
-                  ? 'Price High - Low'
-                  : filter.sortBy === 'price-asc'
-                    ? 'Price Low - High'
-                    : filter.sortBy === 'name-desc'
-                      ? 'Name Z - A'
-                      : 'Name A - Z'}
+        </div>
+      )}
+      {(!!filter.minPrice || !!filter.maxPrice) && (
+        <div className="pill-wrapper">
+          <span className="d-block">Price Range</span>
+          <div className="pill padding-right-l">
+            <h5 className="pill-content margin-0">
+              $
+              {filter.minPrice}
+              - $
+              {filter.maxPrice}
+            </h5>
+            <div
+              className="pill-remove"
+              onClick={onRemovePriceRangeFilter}
+              role="presentation"
+            >
+              <h5 className="margin-0 text-subtle">
+                <CloseCircleOutlined />
               </h5>
-              <div
-                className="pill-remove"
-                onClick={onRemoveSortFilter}
-                role="presentation"
-              >
-                <h5 className="margin-0 text-subtle">
-                  <CloseCircleOutlined />
-                </h5>
-              </div>
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+      {filter.sortBy && (
+        <div className="pill-wrapper">
+          <span className="d-block">Sort By</span>
+          <div className="pill padding-right-l">
+            <h5 className="pill-content margin-0">
+              {filter.sortBy === 'price-desc'
+                ? 'Price High - Low'
+                : filter.sortBy === 'price-asc'
+                  ? 'Price Low - High'
+                  : filter.sortBy === 'name-desc'
+                    ? 'Name Z - A'
+                    : 'Name A - Z'}
+            </h5>
+            <div
+              className="pill-remove"
+              onClick={onRemoveSortFilter}
+              role="presentation"
+            >
+              <h5 className="margin-0 text-subtle">
+                <CloseCircleOutlined />
+              </h5>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

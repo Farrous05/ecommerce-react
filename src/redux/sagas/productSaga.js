@@ -196,6 +196,10 @@ function* productSaga({ type, payload }) {
         yield put(setLoading(false));
       } catch (e) {
         yield handleError(e);
+        // Re-throw the error to be caught by the component
+        if (e.message && e.message.includes('https://console.firebase.google.com')) {
+          throw e;
+        }
       }
       break;
     }

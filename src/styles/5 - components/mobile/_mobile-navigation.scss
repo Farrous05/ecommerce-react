@@ -7,56 +7,80 @@
   background: #fff;
   z-index: map-get($z-index, 'navigation');
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  overflow: visible;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .mobile-navigation-main {
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 0 $s-size;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: relative;
   z-index: 1;
+  
+  @media (max-width: 350px) {
+    padding: 0 calc($s-size * 0.5);
+    height: 50px;
+  }
 }
 
 .mobile-navigation-sec {
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 5px $s-size;
+  flex-wrap: wrap;
+  
+  @media (max-width: 350px) {
+    padding: 5px calc($s-size * 0.5);
+  }
 }
 
-.mobile-navigation-menu {
-  height: 100%;
+.mobile-navigation-icons {
   display: flex;
   align-items: center;
-  margin: 0;
-  padding: 0;
-
-  .user-nav {
-    height: 100%;
-    margin: 0;
-  }
-
-  .user-nav h5 {
-    display: none;
-  }
+  height: 100%;
 }
 
 .mobile-navigation-item {
-  // width: 50%;
   height: 100%;
   list-style: none;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  // border: 1px solid $border-color;
+  margin: 0 0.2rem;
 }
 
 .mobile-navigation-logo {
-  flex-grow: 1;
-  padding-left: .5rem;
-  margin-right: $xl-size;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0 $s-size;
+  
+  img {
+    max-height: 40px;
+    width: auto;
+    
+    @media (max-width: 350px) {
+      max-height: 35px;
+    }
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    
+    @media (max-width: 350px) {
+      font-size: 1.4rem;
+    }
+  }
 }
 
 .mobile-navigation-search {
@@ -66,9 +90,41 @@
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid $paragraph-color;
+  
+  @media (max-width: 380px) {
+    width: 100%;
+    margin-top: 5px;
+  }
 }
 
 .mobile-navigation-search-title {
   margin: .6rem;
   font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  @media (max-width: 350px) {
+    font-size: 90%;
+  }
+}
+
+/* Mobile navigation icons */
+.mobile-navigation-icon {
+  padding: 0 0.5rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  opacity: 1;
+  color: $primary-dark;
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  
+  &:focus {
+    outline: none;
+  }
 }

@@ -1,5 +1,5 @@
 import { BasketToggle } from '@/components/basket';
-import { HOME, SIGNIN } from '@/constants/routes';
+import { HOME, SIGNIN, ADMIN_DASHBOARD, SHOP, SEARCH } from '@/constants/routes';
 import PropType from 'prop-types';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -7,6 +7,8 @@ import UserNav from '@/views/account/components/UserAvatar';
 import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
 import SearchBar from './SearchBar';
+import { DashboardOutlined, MenuOutlined, SearchOutlined, ShoppingOutlined, UserOutlined } from '@ant-design/icons';
+import logo from '@/images/logo-full.png';
 
 const Navigation = (props) => {
   const {
@@ -18,59 +20,87 @@ const Navigation = (props) => {
     if (isAuthenticating) e.preventDefault();
   };
 
+  const onSearchClick = () => {
+    document.querySelector('.searchbar-wrapper')?.classList.add('is-open-searchbar');
+    document.querySelector('.searchbar-input')?.focus();
+  };
+
   return (
     <nav className="mobile-navigation">
       <div className="mobile-navigation-main">
+        <div className="mobile-navigation-item">
+          <Link to={HOME} className="mobile-navigation-icon" onClick={onClickLink}>
+            <MenuOutlined style={{ fontSize: '2rem' }} />
+          </Link>
+        </div>
+        
         <div className="mobile-navigation-logo">
           <Link onClick={onClickLink} to={HOME}>
-            <h2>SALINAKA</h2>
+            {logo ? (
+              <img src={logo} alt="Salinaka Logo" />
+            ) : (
+              <h2>SALINAKA</h2>
+            )}
           </Link>
         </div>
 
-        <BasketToggle>
-          {({ onClickToggle }) => (
-            <button
-              className="button-link navigation-menu-link basket-toggle"
-              onClick={onClickToggle}
-              disabled={disabledPaths.includes(pathname)}
-              type="button"
-            >
-
-              <Badge count={basketLength}>
-                <i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
-              </Badge>
-            </button>
-          )}
-        </BasketToggle>
-        <ul className="mobile-navigation-menu">
+        <div className="mobile-navigation-icons">
+          <div className="mobile-navigation-item">
+            <div className="mobile-navigation-icon" onClick={onSearchClick} role="button" tabIndex="0">
+              <SearchOutlined style={{ fontSize: '2rem' }} />
+            </div>
+          </div>
+          
+          <div className="mobile-navigation-item">
+            <BasketToggle>
+              {({ onClickToggle }) => (
+                <button
+                  className="mobile-navigation-icon"
+                  onClick={onClickToggle}
+                  disabled={disabledPaths.includes(pathname)}
+                  type="button"
+                >
+                  <Badge count={basketLength}>
+                    <ShoppingOutlined style={{ fontSize: '2rem' }} />
+                  </Badge>
+                </button>
+              )}
+            </BasketToggle>
+          </div>
+          
           {user ? (
             <li className="mobile-navigation-item">
               <UserNav />
             </li>
           ) : (
-            <>
+            <div className="mobile-navigation-item">
               {pathname !== SIGNIN && (
-                <li className="mobile-navigation-item">
-                  <Link
-                    className="navigation-menu-link"
-                    onClick={onClickLink}
-                    to={SIGNIN}
-                  >
-                    Sign In
-                  </Link>
-                </li>
+                <Link
+                  className="mobile-navigation-icon"
+                  onClick={onClickLink}
+                  to={SIGNIN}
+                >
+                  <UserOutlined style={{ fontSize: '2rem' }} />
+                </Link>
               )}
-            </>
+            </div>
           )}
-        </ul>
+          
+          {user && user.role === 'ADMIN' && (
+            <div className="mobile-navigation-item">
+              <Link
+                className="mobile-navigation-icon"
+                to={ADMIN_DASHBOARD}
+                title="Admin Dashboard"
+              >
+                <DashboardOutlined style={{ fontSize: '2rem' }} />
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
       <div className="mobile-navigation-sec">
         <SearchBar />
-        <FiltersToggle>
-          <button className="button-link button-small" type="button">
-            <i className="fa fa-filter" />
-          </button>
-        </FiltersToggle>
       </div>
     </nav>
   );

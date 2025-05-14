@@ -1,8 +1,21 @@
 .filters {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  max-height: 90vh;
+  background: $white;
   position: relative;
-  z-index: map-get($z-index, 'filter');
+  z-index: map-get($z-index, 'filters');
+  border-radius: 1rem;
+  padding: $l-size;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.filters-header {
+  margin-bottom: $m-size;
+  padding-bottom: $s-size;
+  border-bottom: 1px solid $border-color;
 }
 
 .filters-field {
@@ -23,11 +36,25 @@
 
 .filters-brand {
   width: 100%;
+  padding: 8px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+
+.filters-sort-by {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  margin-top: 8px;
 }
 
 .filters-action {
   display: flex;
   width: 100%;
+  margin-top: $m-size;
+  gap: $s-size;
 }
 
 .filters-button {
@@ -36,14 +63,35 @@
 
 .filters-toggle {
   position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  padding: 5px 10px;
+  background: $background-color-01;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: darken($background-color-01, 5%);
+  }
+  
+  &--active {
+    background: rgba($primary-dark, 0.08);
+    
+    &:hover {
+      background: rgba($primary-dark, 0.12);
+    }
+    
+    .filters-toggle-caret {
+      transform: rotate(180deg);
+    }
+  }
 }
 
 .filters-toggle-sub {
-  width: 400px;
-  height: 360px;
-  background: $white;
+  width: 100%;
+  max-width: 500px;
   position: relative;
-  padding: $m-size;
+  padding: 0;
 
   @include mobile {
     width: 100%;
@@ -55,14 +103,76 @@
 }
 
 .filters-toggle-caret {
-  transform: rotate(-90deg);
+  transform: rotate(0);
+  transition: transform 0.3s ease;
+  margin-left: $s-size;
 }
 
 .filters-wrapper {
   display: flex;
   align-items: center;
+  gap: 8px;
+  font-size: 1rem;
 }
 
-// .is-open-filters .filters-toggle-caret {
-//   transform: rotate(180deg);
-// }
+.is-open-filters .filters-toggle-caret {
+  transform: rotate(180deg);
+}
+
+// Styling for filter pills
+.pill-wrapper {
+  display: inline-block;
+  margin-right: $s-size;
+  margin-bottom: $s-size;
+  
+  span {
+    font-size: $font-small;
+    color: $paragraph-color;
+    margin-bottom: 3px;
+  }
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  background: rgba($primary-dark, 0.06);
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: rgba($primary-dark, 0.09);
+  }
+}
+
+.pill-content {
+  flex-grow: 1;
+  font-size: $font-small;
+  font-weight: normal;
+  color: $primary-dark;
+  cursor: pointer;
+}
+
+.pill-remove {
+  cursor: pointer;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: rgba($primary-dark, 0.1);
+    
+    h5 {
+      color: $red !important;
+    }
+  }
+  
+  h5 {
+    line-height: 1;
+    transition: color 0.3s;
+  }
+}

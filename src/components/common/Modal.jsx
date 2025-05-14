@@ -10,29 +10,42 @@ const Modal = ({
   children
 }) => {
   const defaultStyle = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      zIndex: 9999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
     content: {
-      top: '50%',
-      left: '50%',
+      position: 'relative',
+      top: 'auto',
+      left: 'auto',
       right: 'auto',
       bottom: 'auto',
-      position: 'fixed',
-      padding: '50px 20px',
-      transition: 'all .5s ease',
-      zIndex: 9999,
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      boxShadow: '0 5px 10px rgba(0, 0, 0, .1)',
-      animation: 'scale .3s ease',
+      maxWidth: '500px',
+      width: '90%',
+      padding: 0,
+      border: 'none',
+      background: 'transparent',
+      overflow: 'visible',
+      borderRadius: '10px',
       ...overrideStyle
     }
   };
 
-  AppModal.setAppElement('#app');
+  // Try to find an existing app element or use document.body as fallback
+  try {
+    const appElement = document.getElementById('app') || document.body;
+    AppModal.setAppElement(appElement);
+  } catch (error) {
+    console.warn('Could not set app element for Modal:', error);
+  }
 
   return (
     <AppModal
       closeTimeoutMS={300}
-      contentLabel="Product Modal"
+      contentLabel="Modal Content"
       isOpen={isOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={onRequestClose}

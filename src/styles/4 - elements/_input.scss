@@ -1,25 +1,32 @@
 input {
   border: 1px solid $border-color;
-  background: transparent;
+  background: $white;
   font-size: $font-small;
   padding: $s-size $m-size;
-  font-weight: bold;
-  box-shadow: 0;
+  font-weight: $font-weight-regular;
+  box-shadow: none;
   outline: 0;
+  border-radius: 0.8rem;
+  transition: all 0.2s ease;
+  font-family: $font-family-sans;
+  color: $paragraph-color;
 
   &:focus {
     outline: none;
-    border: 1px solid $border-color-focus !important;
+    border: 1px solid $accent-color !important;
+    box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
   }
 }
 
 input::-webkit-input-placeholder {
-  font-weight: bold;
+  font-weight: $font-weight-regular;
   opacity: .7;
+  color: $gray-10;
 }
 
 input:read-only:not(.price-range-input) {
-  opacity: .5;
+  opacity: .7;
+  background-color: $background-color-01;
 
   &:hover {
     cursor: default;
@@ -27,8 +34,8 @@ input:read-only:not(.price-range-input) {
 }
 
 input[type=tel] {
-  background: transparent;
-  border-radius: 0;
+  background: $white;
+  border-radius: 0.8rem;
   padding-left: 48px !important;
 }
 
@@ -41,7 +48,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 input[type=number]:invalid,
 input[type=number]:out-of-range {
-  border: 2px solid #ff6347;
+  border: 1px solid $red;
 }
 
 input[type=date] {
@@ -49,6 +56,7 @@ input[type=date] {
   -webkit-appearance: textfield;
 }
 
+// Checkboxes and Radios
 input[type=checkbox],
 input[type=radio] {
   padding: 0;
@@ -61,79 +69,122 @@ input[type=radio] {
 
 input[type=checkbox] + label,
 input[type=radio] + label {
-  font-size: $font-medium;
+  font-size: $font-small;
   background: none;
   border: none;
   padding: $s-size 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  color: $paragraph-color;
+  font-weight: $font-weight-regular;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $primary-dark;
+  }
 }
 
+input[type=checkbox] + label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: $white;
+  border: 2px solid $border-color-focus;
+  padding: 8px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 0.5rem;
+  transition: all .2s ease;
+}
 
-input[type=checkbox] + label:before,
 input[type=radio] + label:before {
   content:'';
   -webkit-appearance: none;
   background-color: $white;
   border: 2px solid $border-color-focus;
-  // box-shadow: 0 0 0 $white,  inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-  padding: 10px;
+  padding: 8px;
   display: inline-block;
   position: relative;
   vertical-align: middle;
   cursor: pointer;
-  margin-right: 5px;
+  margin-right: 10px;
   border-radius: 50%;
-  transition: all .3s ease;
+  transition: all .2s ease;
 }
 
-input[type=checkbox] + label:after,
+input[type=checkbox] + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 4px;
+  height: 10px;
+  border: solid $white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: all .2s ease;
+}
+
 input[type=radio] + label:after {
   content: '';
   display: block;
   position: absolute;
   top: 0;
-  left: 10px;
+  left: 0;
+  right: 0;
   bottom: 0;
   margin: auto;
-  width: 3px;
-  height: 10px;
-  border: solid $border-color;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: all .3s ease;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $white;
+  opacity: 0;
+  transform: scale(0);
+  transition: all .2s ease;
 }
 
 input[type=checkbox]:hover + label:before,
 input[type=radio]:hover + label:before {
-  border: 2px solid darken($border-color-focus, 5%);
+  border: 2px solid $accent-color;
 }
 
 input[type=checkbox]:checked + label:before,
 input[type=radio]:checked + label:before {
-  border: 2px solid $black;
-	background: $black;
+  border: 2px solid $accent-color;
+  background: $accent-color;
 }
 
-input[type=checkbox]:checked + label:after,
+input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+
 input[type=radio]:checked + label:after {
-  border: solid $white;
-  border-width: 0 2px 2px 0;
+  opacity: 1;
+  transform: scale(1);
 }
 
 input[type=color] {
   padding: 0;
+  height: 40px;
+  cursor: pointer;
 }
-
 
 // override react-phone-input-2
 .react-tel-input input[type=tel] {
-  @extend input;
   width: 100% !important;
-  font-family: 'Tajawal' !important;
-  // margin-bottom: 1.2rem !important;
-  font-size: $font-medium !important;
-  border: 1px solid $border-color-focus !important;
+  font-family: $font-family-sans !important;
+  font-size: $font-small !important;
+  border: 1px solid $border-color !important;
+
+  &:focus {
+    border: 1px solid $accent-color !important;
+    box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
+  }
 }
 
 .react-tel-input input[type=tel].input-error {
@@ -146,19 +197,34 @@ input[type=color] {
 
 .input-message {
   display: block;
-  padding: $s-size;
+  padding: $xs-size $s-size;
   color: $red;
-  font-weight: bold;
+  font-weight: $font-weight-medium;
+  font-size: $font-xsmall;
+  margin-top: 5px;
 }
 
 .input-form {
   padding: 10px $m-size !important;
-  border: 1px solid $border-color-focus !important;
-  font-size: $font-medium !important;
-  // margin-bottom: $s-size;
+  border: 1px solid $border-color !important;
+  font-size: $font-small !important;
+  border-radius: 0.8rem;
+  
+  &:focus {
+    border: 1px solid $accent-color !important;
+    box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
+  }
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+  margin-bottom: $m-size;
+  
+  label {
+    margin-bottom: $xs-size;
+    font-weight: $font-weight-medium;
+    font-size: $font-small;
+    color: $heading-color;
+  }
 }

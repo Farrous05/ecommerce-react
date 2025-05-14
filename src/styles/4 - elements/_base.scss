@@ -3,19 +3,35 @@
 //
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  max-width: 100%;
 }
 
 html {
   font-size: 62.5%;
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
-  font-family: 'Tajawal', Helvetica, Arial, sans-serif;
+  width: 100%;
+  font-family: $font-family-sans;
   font-size: $baseFontSize;
-  background: $background-color;
-  font-weight: bold;
+  background: linear-gradient(to bottom, $background-color, #f7f7f7);
+  font-weight: $font-weight-regular;
   overflow-x: hidden;
+  color: $paragraph-color;
+  line-height: $line-height;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font-family: $font-family-sans;
+  transition: all 0.2s ease;
 }
 
 button:hover {
@@ -28,12 +44,14 @@ button:focus {
 
 p {
   color: $paragraph-color;
-  // font-weight: 300;
+  font-weight: $font-weight-regular;
   line-height: $line-height;
+  margin-bottom: $m-size;
+  font-size: $font-medium;
 }
 
 strong { 
-  font-weight: bold;
+  font-weight: $font-weight-semibold;
 }
 
 span {
@@ -42,31 +60,74 @@ span {
   position: relative;
 }
 
-h1,
-h2,
-h3, 
-h4, 
-h5,
-h6 {
-  font-family: 'Tajawal', Helvetica, Arial, sans-serif;
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
   color: $heading-color;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-tight;
+  margin-bottom: $m-size;
+  line-height: $line-height-tight;
+  width: 100%;
 }
 
-// body::-webkit-scrollbar {
-//   width: 8px;
-// }
+h1 { 
+  font-size: $font-jumbo; 
+  margin-bottom: $l-size; 
+  @include mobile {
+    font-size: calc($font-jumbo * 0.8);
+  }
+}
+h2 { 
+  font-size: $font-xxlarge; 
+  margin-bottom: $m-size; 
+  @include mobile {
+    font-size: calc($font-xxlarge * 0.9);
+  }
+}
+h3 { 
+  font-size: $font-xlarge; 
+  margin-bottom: $m-size; 
+  @include mobile {
+    font-size: $font-large;
+  }
+}
+h4 { font-size: $font-large; margin-bottom: $s-size; }
+h5 { font-size: $font-medium; margin-bottom: $s-size; }
+h6 { font-size: $font-small; font-weight: $font-weight-bold; margin-bottom: $s-size; }
+
+a {
+  text-decoration: none;
+  color: $accent-color;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: $accent-color-hover;
+  }
+}
+
+// Custom scrollbar styles
+body::-webkit-scrollbar {
+  width: 8px;
+}
  
-// body::-webkit-scrollbar-track {
-//   -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
-// }
+body::-webkit-scrollbar-track {
+  background: $background-color;
+}
  
-// body::-webkit-scrollbar-thumb {
-//   background-color: $heading-color;
-//   outline: 1px solid lighten($heading-color, 10%);
-// }
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 
 #app {
   width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  max-width: 100vw;
 }
 
 .content {
@@ -76,10 +137,20 @@ h6 {
   padding: $top $pad-desktop;
   display: flex;
   animation: fadeIn .5s ease;
+  max-width: 100vw;
+
+  @media (max-width: $tablet) {
+    padding: 7rem $s-size 6rem;
+    flex-direction: column;
+  }
 
   @media (max-width: $mobile) {
-    padding: 5rem $m-size;
+    padding: 6rem $s-size 5rem;
     flex-direction: column;
+  }
+  
+  @include small-mobile {
+    padding: 5.5rem calc($s-size * 0.5) 5rem;
   }
 }
 
@@ -93,6 +164,12 @@ h6 {
   padding-top: $xxl-size;
   overflow: hidden;
   display: flex;
+  
+  @include mobile {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
 }
 
 .content-admin-wrapper {
@@ -102,4 +179,117 @@ h6 {
   padding-top: 0;
   animation: fadeIn .5s ease;
   position: relative;
+  
+  @include mobile {
+    overflow-y: visible;
+    width: 100%;
+  }
 }
+
+.text-thin {
+  font-weight: $font-weight-light;
+}
+
+.text-subtle {
+  color: $gray-10;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 $m-size;
+  width: 100%;
+  
+  @include tablet {
+    padding: 0 $s-size;
+  }
+  
+  @include mobile {
+    padding: 0 calc($s-size * 0.8);
+    max-width: 100%;
+  }
+  
+  @include small-mobile {
+    padding: 0 calc($s-size * 0.5);
+  }
+}
+
+.section {
+  padding: $xl-size 0;
+  margin-bottom: $xl-size;
+  width: 100%;
+
+  @media (max-width: $tablet) {
+    padding: $l-size 0;
+    margin-bottom: $l-size;
+  }
+
+  @media (max-width: $mobile) {
+    padding: $m-size 0;
+    margin-bottom: $l-size;
+  }
+}
+
+.section-title {
+  margin-bottom: $xl-size;
+  text-align: center;
+  position: relative;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: $accent-secondary;
+  }
+  
+  @include mobile {
+    margin-bottom: $l-size;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: $gray-30;
+  margin: $l-size 0;
+  
+  @include mobile {
+    margin: $m-size 0;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make sure images are properly contained */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make inputs mobile-friendly */
+input, select, textarea {
+  font-size: 16px !important; /* Prevents iOS zoom on focus */
+}
+
+/* Add a wrapper for overflow scrolling */
+.horizontal-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+

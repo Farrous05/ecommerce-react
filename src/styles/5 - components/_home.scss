@@ -1,12 +1,507 @@
 .home {
     width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    
+    @include tablet {
+        padding: 0 1.5rem;
+    }
+    
+    @include mobile {
+        padding: 0 1rem;
+    }
+}
+
+.display {
+    margin-bottom: 8rem;
+    
+    @include tablet {
+        margin-bottom: 6rem;
+    }
+    
+    @include mobile {
+        margin-bottom: 4rem;
+    }
+}
+
+.display-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    
+    @include tablet {
+        margin-bottom: 3rem;
+    }
+    
+    @include mobile {
+        margin-bottom: 2.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    h1 {
+        font-size: $font-xxlarge;
+        font-weight: $font-weight-semibold;
+        color: $primary-dark;
+        position: relative;
+        margin-bottom: 0;
+        
+        @include mobile {
+            margin-bottom: 2rem;
+            font-size: calc($font-xxlarge * 0.8);
+        }
+    
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: $accent-secondary;
+            
+            @include mobile {
+                bottom: -10px;
+            }
+        }
+    }
+    
+    a {
+        font-weight: $font-weight-medium;
+        color: $primary-medium;
+        position: relative;
+        font-size: $font-small;
+        transition: all 0.2s ease;
+        margin-bottom: 5px;
+        
+        &:hover {
+            color: $primary-dark;
+        }
+    }
+}
+
+// Enhanced Banner with Badges
+.banner-badge {
+    display: inline-block;
+    background: rgba($accent-color, 0.1);
+    color: $accent-color;
+    padding: 0.8rem 1.5rem;
+    border-radius: 3rem;
+    font-size: $font-small;
+    font-weight: $font-weight-medium;
+    margin-bottom: 2rem;
+    border: 1px solid rgba($accent-color, 0.2);
+}
+
+.banner-cta {
+    display: flex;
+    gap: 1.5rem;
+    
+    @include mobile {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    
+    .button {
+        min-width: 18rem;
+        font-size: $font-small;
+        
+        @include mobile {
+            width: 100%;
+        }
+    }
+    
+    .button-muted {
+        background: transparent;
+        border: 1px solid $gray-20;
+        color: $primary-dark;
+        
+        &:hover {
+            border-color: $primary-dark;
+        }
+    }
+}
+
+.banner-img-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: $accent-color;
+    color: white;
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba($accent-color, 0.3);
+    
+    @include mobile {
+        top: 1rem;
+        right: 1rem;
+        height: 6rem;
+        width: 6rem;
+    }
+    
+    &-text {
+        font-size: $font-medium;
+        font-weight: $font-weight-bold;
+        color: white;
+        margin-bottom: 0.2rem;
+        
+        @include mobile {
+            font-size: $font-small;
+        }
+    }
+    
+    &-title {
+        font-size: $font-small;
+        color: white;
+        opacity: 0.9;
+        
+        @include mobile {
+            font-size: $font-xsmall;
+        }
+    }
+}
+
+// Benefits Bar
+.benefits-bar {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    border-radius: 1rem;
+    padding: 3rem;
+    margin-bottom: 8rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
+    @include tablet {
+        padding: 2.5rem;
+        margin-bottom: 6rem;
+    }
+    
+    @include mobile {
+        flex-direction: column;
+        gap: 2.5rem;
+        padding: 2rem;
+        margin-bottom: 4rem;
+    }
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    
+    .benefit-icon {
+        font-size: 2.5rem;
+        
+        @include mobile {
+            font-size: 2.2rem;
+        }
+    }
+    
+    .benefit-content {
+        h5 {
+            margin-bottom: 0.4rem;
+            font-weight: $font-weight-medium;
+            color: $primary-dark;
+        }
+        
+        p {
+            margin-bottom: 0;
+            font-size: $font-small;
+            color: $primary-medium;
+        }
+    }
+}
+
+// Promo Banner
+.promo-banner {
+    height: 25rem;
+    margin-bottom: 8rem;
+    background: linear-gradient(to right, rgba($accent-color, 0.9), rgba($accent-color, 0.7)),
+                url('/static/promo-banner.jpg') center/cover no-repeat;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+    @include tablet {
+        height: 22rem;
+        margin-bottom: 6rem;
+    }
+    
+    @include mobile {
+        height: 20rem;
+        margin-bottom: 4rem;
+    }
+    
+    .promo-content {
+        padding: 0 5rem;
+        color: white;
+        max-width: 60%;
+        
+        @include tablet {
+            padding: 0 3rem;
+            max-width: 70%;
+        }
+        
+        @include mobile {
+            padding: 0 2rem;
+            max-width: 100%;
+        }
+        
+        h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: $font-xxlarge;
+            
+            @include mobile {
+                font-size: $font-xlarge;
+            }
+        }
+        
+        p {
+            color: rgba(white, 0.9);
+            margin-bottom: 2rem;
+            
+            @include mobile {
+                font-size: $font-small;
+            }
+        }
+        
+        .button {
+            background: white;
+            color: $accent-color;
+            border: none;
+            
+            &:hover {
+                background: rgba(white, 0.9);
+            }
+        }
+    }
+}
+
+// Newsletter Section
+.newsletter {
+    margin-bottom: 8rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 5rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
+    @include tablet {
+        padding: 4rem 3rem;
+        margin-bottom: 6rem;
+    }
+    
+    @include mobile {
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+    }
+    
+    .newsletter-content {
+        max-width: 60rem;
+        margin: 0 auto;
+        
+        h2 {
+            margin-bottom: 1rem;
+            color: $primary-dark;
+        }
+        
+        p {
+            margin-bottom: 3rem;
+            color: $primary-medium;
+            
+            @include mobile {
+                margin-bottom: 2rem;
+            }
+        }
+    }
+    
+    .newsletter-form {
+        display: flex;
+        gap: 1rem;
+        
+        @include mobile {
+            flex-direction: column;
+        }
+        
+        .newsletter-input {
+            flex-grow: 1;
+            height: 4.5rem;
+            padding: 0 2rem;
+            font-size: $font-small;
+            border: 1px solid $gray-20;
+            border-radius: 0.4rem;
+            
+            &:focus {
+                border-color: $accent-color;
+                outline: none;
+            }
+        }
+        
+        .button {
+            min-width: 12rem;
+            height: 4.5rem;
+            
+            @include mobile {
+                width: 100%;
+            }
+        }
+    }
 }
 
 .home-featured {
-    margin: 5rem;
-    margin-top: 10rem;
+    margin: 0;
+    margin-top: 6rem;
+    
+    @include tablet {
+        margin-top: 5rem;
+    }
+    
+    @include mobile {
+        margin-top: 4rem;
+    }
 }
 
 .featured {
     width: 100%;
+}
+
+.product-display-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 3.5rem;
+    
+    @include tablet {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: 3rem;
+    }
+    
+    @include mobile {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-gap: 2rem;
+    }
+}
+
+// Animation styles for dynamic elements
+.sliding-text-horizontal {
+  display: inline-block;
+  animation: slideTextHorizontal 3s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.diagonal-text {
+  position: relative;
+  display: inline-block;
+  animation: diagonalTextSlide 5s ease-in-out infinite;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 0;
+    bottom: -5px;
+    left: 0;
+    background: linear-gradient(to right, $border-color-dark, lighten($border-color-dark, 20%));
+    animation: lineGrow 5s ease-in-out infinite;
+  }
+}
+
+.fade-in-text {
+  animation: fadeInText 1.5s ease-in-out;
+}
+
+.button-animated {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    top: 0;
+    left: -100%;
+    transition: all 0.3s ease;
+  }
+  
+  &:hover {
+    &::before {
+      left: 100%;
+      transition: all 0.5s ease;
+    }
+  }
+}
+
+.icon-animated {
+  transition: transform 0.3s ease;
+  
+  .button:hover & {
+    transform: translateX(5px);
+  }
+}
+
+.animate-spin {
+  animation: spin 10s linear infinite;
+}
+
+// Keyframes
+@keyframes slideTextHorizontal {
+  0% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes diagonalTextSlide {
+  0% {
+    transform: translateX(-10px) translateY(0);
+  }
+  50% {
+    transform: translateX(10px) translateY(-5px);
+  }
+  100% {
+    transform: translateX(-10px) translateY(0);
+  }
+}
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineGrow {
+  0%, 100% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

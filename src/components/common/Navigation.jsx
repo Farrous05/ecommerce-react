@@ -1,22 +1,23 @@
 /* eslint-disable indent */
-import { FilterOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { FilterOutlined, ShoppingOutlined, SearchOutlined, UserOutlined, MenuOutlined, CloseOutlined, DashboardOutlined } from '@ant-design/icons';
 import * as ROUTE from '@/constants/routes';
 import logo from '@/images/logo-full.png';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Link, NavLink, useLocation
+  Link, NavLink, useLocation, useHistory
 } from 'react-router-dom';
 import UserAvatar from '@/views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
-import SearchBar from './SearchBar';
 
 const Navigation = () => {
   const navbar = useRef(null);
   const { pathname } = useLocation();
+  const history = useHistory();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const store = useSelector((state) => ({
     basketLength: state.basket.length,
@@ -44,6 +45,27 @@ const Navigation = () => {
     if (store.isAuthenticating) e.preventDefault();
   };
 
+  const onSearchClick = () => {
+    // Open a modal with the search bar
+    document.querySelector('.searchbar-wrapper')?.classList.add('is-open-searchbar');
+    document.querySelector('.searchbar-input')?.focus();
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    // Prevent body scroll when menu is open
+    if (!menuOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    document.body.classList.remove('no-scroll');
+  };
+
   // disable the basket toggle to these pathnames
   const basketDisabledpathnames = [
     ROUTE.CHECKOUT_STEP_1,
@@ -54,9 +76,7 @@ const Navigation = () => {
     ROUTE.FORGOT_PASSWORD
   ];
 
-  if (store.user && store.user.role === 'ADMIN') {
-    return null;
-  } if (window.screen.width <= 800) {
+  if (window.screen.width <= 800) {
     return (
       <MobileNavigation
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -67,71 +87,136 @@ const Navigation = () => {
     );
   }
   return (
-    <nav className="navigation" ref={navbar}>
-      <div className="logo">
-        <Link onClick={onClickLink} to="/"><img alt="Logo" src={logo} /></Link>
-      </div>
-      <ul className="navigation-menu-main">
-        <li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
-        <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
-      </ul>
-      {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
-        <FiltersToggle>
-          <button className="button-muted button-small" type="button">
-            Filters &nbsp;
-            <FilterOutlined />
-          </button>
-        </FiltersToggle>
-      )}
-      <SearchBar />
-      <ul className="navigation-menu">
-        <li className="navigation-menu-item">
-          <BasketToggle>
-            {({ onClickToggle }) => (
-              <button
-                className="button-link navigation-menu-link basket-toggle"
-                disabled={basketDisabledpathnames.includes(pathname)}
-                onClick={onClickToggle}
-                type="button"
-              >
-
-                <Badge count={store.basketLength}>
-                  <ShoppingOutlined style={{ fontSize: '2.4rem' }} />
-                </Badge>
-              </button>
-            )}
-          </BasketToggle>
-        </li>
-        {store.user ? (
-          <li className="navigation-menu-item">
-            <UserAvatar />
-          </li>
-        ) : (
-          <li className="navigation-action">
-            {pathname !== ROUTE.SIGNUP && (
+    <>
+      <nav className="navigation" ref={navbar}>
+        <div className="navigation-left">
+          <div className="navigation-icon" onClick={toggleMenu} role="button" tabIndex="0">
+            <MenuOutlined style={{ fontSize: '2.2rem' }} />
+          </div>
+          
+          {/* Removed FiltersToggle from the header */}
+        </div>
+        
+        <div className="logo">
+          <Link onClick={onClickLink} to="/"><img alt="Logo" src={logo} /></Link>
+        </div>
+        
+        <div className="navigation-right">
+          <div className="navigation-icon" onClick={onSearchClick} role="button" tabIndex="0">
+            <SearchOutlined style={{ fontSize: '2.2rem' }} />
+          </div>
+          
+          <div className="navigation-icon">
+            <BasketToggle>
+              {({ onClickToggle }) => (
+                <div
+                  className="basket-toggle"
+                  role="button"
+                  onClick={onClickToggle}
+                  disabled={basketDisabledpathnames.includes(pathname)}
+                  tabIndex="0"
+                >
+                  <Badge count={store.basketLength}>
+                    <ShoppingOutlined style={{ fontSize: '2.2rem' }} />
+                  </Badge>
+                </div>
+              )}
+            </BasketToggle>
+          </div>
+          
+          {store.user ? (
+            <>
+              {store.user.role === 'ADMIN' && (
+                <div className="navigation-icon">
+                  <Link
+                    to={ROUTE.ADMIN_DASHBOARD}
+                    title="Admin Dashboard"
+                  >
+                    <DashboardOutlined style={{ fontSize: '2.2rem' }} />
+                  </Link>
+                </div>
+              )}
+              <div className="navigation-icon">
+                <UserAvatar />
+              </div>
+            </>
+          ) : (
+            <div className="navigation-icon">
               <Link
-                className="button button-small"
-                onClick={onClickLink}
-                to={ROUTE.SIGNUP}
-              >
-                Sign Up
-              </Link>
-            )}
-            {pathname !== ROUTE.SIGNIN && (
-              <Link
-                className="button button-small button-muted margin-left-s"
                 onClick={onClickLink}
                 to={ROUTE.SIGNIN}
               >
-                Sign In
+                <UserOutlined style={{ fontSize: '2.2rem' }} />
               </Link>
-            )}
-          </li>
-        )}
-      </ul>
-    </nav>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Sliding Menu */}
+      <div className={`sliding-menu ${menuOpen ? 'is-open' : ''}`}>
+        <div className="sliding-menu-overlay" onClick={closeMenu} role="button" tabIndex="0"></div>
+        <div className="sliding-menu-content">
+          <div className="sliding-menu-header">
+            <div className="sliding-menu-close" onClick={closeMenu} role="button" tabIndex="0">
+              <CloseOutlined style={{ fontSize: '2rem' }} />
+            </div>
+          </div>
+          <div className="sliding-menu-body">
+            <ul className="sliding-menu-list">
+              <li>
+                <NavLink 
+                  activeClassName="sliding-menu-active"
+                  exact
+                  to={ROUTE.HOME}
+                  onClick={closeMenu}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  activeClassName="sliding-menu-active"
+                  to={ROUTE.SHOP}
+                  onClick={closeMenu}
+                >
+                  Shop
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  activeClassName="sliding-menu-active"
+                  to={ROUTE.FEATURED_PRODUCTS}
+                  onClick={closeMenu}
+                >
+                  Featured
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  activeClassName="sliding-menu-active"
+                  to={ROUTE.RECOMMENDED_PRODUCTS}
+                  onClick={closeMenu}
+                >
+                  Recommended
+                </NavLink>
+              </li>
+              {store.user && store.user.role === 'ADMIN' && (
+                <li>
+                  <NavLink 
+                    activeClassName="sliding-menu-active"
+                    to={ROUTE.ADMIN_DASHBOARD}
+                    onClick={closeMenu}
+                  >
+                    Admin Dashboard
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

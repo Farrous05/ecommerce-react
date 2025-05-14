@@ -62,9 +62,9 @@ const Filters = ({ closeModal }) => {
 
     if (isChanged) {
       dispatch(applyFilter(field));
-    } else {
-      closeModal();
     }
+    
+    closeModal();
   };
 
   const onResetFilter = () => {
@@ -72,13 +72,14 @@ const Filters = ({ closeModal }) => {
 
     if (filterFields.some((key) => !!filter[key])) {
       dispatch(resetFilter());
-    } else {
-      closeModal();
     }
+    
+    closeModal();
   };
 
   return (
     <div className="filters">
+      <h3 className="filters-header">Filter Products</h3>
       <div className="filters-field">
         <span>Brand</span>
         <br />

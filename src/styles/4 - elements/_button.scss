@@ -1,53 +1,151 @@
 .button {
-  background: $button-color;
-  padding: $m-size;
-  border: 1px solid $button-color;
-  color: $white;
-  font-weight: bold;
-  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
-  @include bezier-transition(all, .3s, ease);
+  align-items: center;
+  height: 5rem;
+  padding: 0 2.4rem;
+  font-size: $font-small;
+  font-weight: $font-weight-medium;
+  border-radius: 0.4rem;
+  outline: none;
+  border: none;
+  background: $accent-color;
+  color: $white;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
 
   &:hover {
-    cursor: pointer;
-    background: $button-hover;
-    border: 1px solid $button-hover;
-    text-decoration: none;
+    background: $accent-color-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba($accent-color, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba($accent-color, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // Button variations
+  &-muted {
+    background: transparent;
+    border: 1px solid $gray-20;
+    color: $primary-dark;
+    
+    &:hover {
+      border-color: $primary-dark;
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+  
+  &-outline {
+    background: transparent;
+    border: 1px solid $accent-color;
+    color: $accent-color;
+    
+    &:hover {
+      background: rgba($accent-color, 0.05);
+      box-shadow: none;
+    }
+  }
+  
+  &-dark {
+    background: $primary-dark;
+    
+    &:hover {
+      background: lighten($primary-dark, 5%);
+    }
+  }
+  
+  &-small {
+    height: 4rem;
+    padding: 0 1.8rem;
+    font-size: $font-xsmall;
+  }
+  
+  &-large {
+    height: 6rem;
+    padding: 0 3rem;
+    font-size: $font-medium;
+  }
+  
+  &-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0;
+    border-radius: 50%;
+  }
+  
+  &-block {
+    width: 100%;
   }
 }
 
 .button:disabled {
-  opacity: .5;
+  opacity: .4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 
   &:hover {
-    cursor: not-allowed;   
-    // background: none;
+    cursor: not-allowed;
+    background: $button-color;
+    border: 1px solid $button-color;
   }
 }
 
 .button-link {
-  @extend .button;
   background: none;
-  color: $black;
+  color: $primary-medium;
   border: none;
+  box-shadow: none;
+  padding: $s-size;
+  font-weight: $font-weight-medium;
+  text-transform: none;
+  min-height: auto;
 
   &:hover {
     background: none;
     border: none;
+    color: $primary-dark;
+    box-shadow: none;
+    transform: none;
+    text-decoration: underline;
+  }
+}
+
+.button-accent {
+  background: $accent-secondary;
+  border-color: $accent-secondary;
+  
+  &:hover {
+    background: darken($accent-secondary, 5%);
+    border-color: darken($accent-secondary, 5%);
   }
 }
 
 .button-muted {
-  @extend .button;
-  background: $background-color-01;
-  color: lighten($paragraph-color, 20%);
-  border: 1px solid $border-color;
+  background: $gray-40;
+  color: $primary-medium;
+  border: 1px solid transparent;
+  box-shadow: none;
 
   &:hover {
-    background: $background-color;
-    border: 1px solid $border-color-focus;
+    background: $gray-30;
+    border: 1px solid transparent;
+    box-shadow: none;
   }
 }
 
@@ -58,45 +156,129 @@
 
 .button-border {
   background: transparent;
-  border: 1px solid $button-color;
-  color: $button-color;
+  border: 1px solid $primary-medium;
+  color: $primary-medium;
+  box-shadow: none;
 
   &:hover {
-    background: $border-color;
-    border: 1px solid $button-color;
+    background: rgba($primary-medium, 0.05);
+    border: 1px solid $primary-dark;
+    color: $primary-dark;
+    box-shadow: none;
+  }
+}
+
+.button-secondary {
+  background: $button-secondary-color;
+  border: 1px solid $gray-30;
+  color: $primary-medium;
+  box-shadow: none;
+
+  &:hover {
+    background: $button-secondary-hover;
+    border: 1px solid $primary-medium;
+    color: $primary-dark;
+    box-shadow: none;
   }
 }
 
 .button-danger {
-  background: red;
-  color: #fff;
+  background: $red;
+  border-color: $red;
+  color: $white;
 
   &:hover {
-    background: darken(red, 10%);
+    background: darken($red, 10%);
+    border-color: darken($red, 10%);
   }
 }
 
 .button-border-gray {
-  border: 1px solid $border-color;
-  color: $paragraph-color;
+  border: 1px solid $gray-30;
+  color: $primary-medium;
+  background: transparent;
+  box-shadow: none;
 
   &:hover {
-    border: 1px solid $border-color;
-    background: $border-color;
+    border: 1px solid $primary-dark;
+    background: rgba($primary-dark, 0.05);
+    color: $primary-dark;
+    box-shadow: none;
   }
 }
 
 .button-small {
-  font-size: $font-small;
-  padding: $s-size $m-size;
+  font-size: $font-xsmall;
+  padding: $xs-size $s-size;
+  min-height: 3.2rem;
 }
+
+.button-large {
+  font-size: $font-medium;
+  padding: $m-size $l-size;
+  min-height: 5rem;
+}
+
 .button-icon {
-  display: flex;
-  text-align: center;
+  display: inline-flex;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  gap: $xs-size;
 
   & * {
     font-size: inherit;
+  }
+}
+
+.banner {
+  background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  height: 65rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.banner-desc h1 {
+  font-size: calc($font-jumbo * 1.2);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.banner-img {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.05);
+    z-index: 1;
+  }
+}
+
+.product-card {
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    
+    .product-card-button {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.product-card-button {
+  opacity: 1;
+  transform: none;
+  transition: all 0.3s ease;
+  background: $primary-dark;
+  color: $white;
+  
+  &:hover {
+    background: darken($primary-dark, 10%);
   }
 }

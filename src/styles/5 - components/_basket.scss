@@ -9,9 +9,11 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, .08);
   @include bezier-transition(transform);
   z-index: map-get($z-index, 'basket');
+  border-radius: 1rem 0 0 1rem;
 
   @include mobile {
     width: 100%;
+    border-radius: 0;
   }
 }
 
@@ -37,6 +39,8 @@
   margin-bottom: $s-size;
   @include bezier-transition();
   animation: slide-up .5s ease;
+  border-radius: 0.8rem;
+  overflow: hidden;
 }
 
 .basket-item-wrapper {
@@ -91,6 +95,8 @@
   height: 90px;
   margin-right: $m-size;
   position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .basket-item-img {
@@ -150,6 +156,7 @@
   font-size: $font-medium;
   padding: $m-size $l-size;
   text-transform: uppercase;
+  border-radius: 0.5rem;
 }
 
 .basket-total {

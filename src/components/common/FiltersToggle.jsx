@@ -10,11 +10,18 @@ const FiltersToggle = ({ children }) => {
   return (
     <>
       <div
-        className="filters-toggle"
+        className={`filters-toggle ${isOpenModal ? 'filters-toggle--active' : ''}`}
         onClick={onOpenModal}
         role="presentation"
+        aria-label="Toggle filters"
       >
-        {children}
+        {children || (
+          <div className="filters-wrapper">
+            <i className="fa fa-filter" />
+            <span>Filters</span>
+            <i className="fa fa-chevron-down filters-toggle-caret" />
+          </div>
+        )}
       </div>
       <Modal
         isOpen={isOpenModal}
@@ -27,8 +34,9 @@ const FiltersToggle = ({ children }) => {
           className="modal-close-button"
           onClick={onCloseModal}
           type="button"
+          aria-label="Close filters"
         >
-          <i className="fa fa-times-circle" />
+          <i className="fa fa-times" />
         </button>
       </Modal>
     </>
@@ -39,7 +47,11 @@ FiltersToggle.propTypes = {
   children: PropType.oneOfType([
     PropType.arrayOf(PropType.node),
     PropType.node
-  ]).isRequired
+  ])
+};
+
+FiltersToggle.defaultProps = {
+  children: null
 };
 
 export default FiltersToggle;

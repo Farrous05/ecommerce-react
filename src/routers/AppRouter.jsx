@@ -1,5 +1,5 @@
 import { Basket } from '@/components/basket';
-import { Footer, Navigation } from '@/components/common';
+import { Footer, Navigation, SearchBar } from '@/components/common';
 import * as ROUTES from '@/constants/routes';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -18,6 +18,7 @@ const AppRouter = () => (
     <>
       <Navigation />
       <Basket />
+      <SearchBar />
       <Switch>
         <Route
           component={view.Search}
@@ -91,6 +92,10 @@ const AppRouter = () => (
         <AdminRoute
           component={view.Products}
           path={ROUTES.ADMIN_PRODUCTS}
+        />
+        <AdminRoute
+          component={view.Users}
+          path={ROUTES.ADMIN_USERS}
         />
         <AdminRoute
           component={view.AddProduct}

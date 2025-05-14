@@ -1,69 +1,312 @@
+// ============================================
+//  Footer styles
+// ============================================
+
 .footer {
   position: relative;
-  padding: 0 $xxl-size;
-  margin-top: $xl-size;
-  background: $off-white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @include mobile {
-    padding: 0;
-    padding-top: 2.5rem;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  a {
-    text-decoration: underline;
-  }
-}
-
-.footer-logo {
-  width: 15rem;
-  height: 6rem;
-  object-fit: contain;
-}
-
-.footer-col-1 {
-  flex-basis: 40%; 
-
-  @include mobile {
-    flex-basis: none;
-    order: 1;
-    text-align: center;
-  }
-}
-
-.footer-col-2 {
-  padding: 3rem 0;
-  text-align: center;
-  flex-basis: 20%;
-
-  @include mobile {
-    flex-basis: none;
-    order: 3;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-}
-
-.footer-col-3 {
-  flex-basis: 40%;
-  text-align: right;
-
-  @include mobile {
-    flex-basis: none;
-    order: 2;
-    text-align: center;
-  }
-}
-
-@include mobile {
-  .footer-col-1,
-  .footer-col-2,
-  .footer-col-3 {
+  width: 100%;
+  background-color: $white;
+  padding: 0;
+  margin-top: 6rem;
+  overflow: hidden;
+  
+  &-wave {
+    position: relative;
     width: 100%;
-    margin: $s-size 0;
+    height: 100px;
+    margin-bottom: -5px;
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+  &-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    background-color: #f8f8f8;
+  }
+  
+  &-col-1,
+  &-col-2,
+  &-col-3,
+  &-col-4 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &-logo {
+    margin-bottom: 1rem;
+    
+    img {
+      width: 120px;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+  }
+  
+  &-description {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: $text-subtle;
+    line-height: 1.5;
+  }
+  
+  &-social {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: $white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+    
+    &.github-icon {
+      background: #333;
+      &:hover {
+        background: darken(#333, 10%);
+      }
+    }
+    
+    &.instagram-icon {
+      background: #e1306c;
+      &:hover {
+        background: darken(#e1306c, 10%);
+      }
+    }
+    
+    &.linkedin-icon {
+      background: #0077b5;
+      &:hover {
+        background: darken(#0077b5, 10%);
+      }
+    }
+    
+    &.twitter-icon {
+      background: #1da1f2;
+      &:hover {
+        background: darken(#1da1f2, 10%);
+      }
+    }
+  }
+  
+  &-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: $border-color-dark;
+    }
+  }
+  
+  &-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &-link-item {
+    margin-bottom: 0.75rem;
+  }
+  
+  &-link {
+    color: $text-color;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+    
+    &::before {
+      content: '→';
+      margin-right: 0.5rem;
+      opacity: 0;
+      transform: translateX(-5px);
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    &:hover {
+      color: $button-color;
+      padding-left: 0.5rem;
+      
+      &::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+  
+  &-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &-contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: $text-color;
+  }
+  
+  &-contact-icon {
+    margin-right: 0.75rem;
+    color: $button-color;
+    font-size: 1.1rem;
+  }
+  
+  &-subscribe {
+    margin-top: 2rem;
+  }
+  
+  &-subscribe-wrapper {
+    display: flex;
+    height: 42px;
+  }
+  
+  &-subscribe-input {
+    flex: 1;
+    height: 100%;
+    padding: 0 1rem;
+    border: 1px solid $border-color;
+    border-right: none;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    transition: border-color 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $button-color;
+    }
+  }
+  
+  &-subscribe-button {
+    height: 100%;
+    padding: 0 1.25rem;
+    background-color: $button-color;
+    color: $white;
+    border: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: darken($button-color, 10%);
+    }
+  }
+  
+  &-bottom {
+    background-color: darken(#f8f8f8, 5%);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-top: 1px solid $border-color;
+    
+    &-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .made-by-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .made-by-heart {
+    color: #e25555;
+    animation: heartbeat 1.5s infinite ease-in-out;
+  }
+  
+  .made-by-brand {
+    font-weight: 600;
+    color: $button-color;
+  }
+  
+  .copyright {
+    color: $text-subtle;
+    font-size: 0.85rem;
+  }
+  
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $button-color;
+    color: $white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    &:hover {
+      transform: translateY(-5px);
+      background-color: darken($button-color, 10%);
+    }
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+// Media queries
+@media (max-width: 991px) {
+  .footer {
+    &-content {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    &-bottom-content {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    &-wave {
+      height: 60px;
+    }
   }
 }

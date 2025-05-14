@@ -1,11 +1,11 @@
 import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from '@/constants/constants';
 
-const initState = null;
-// {
-// id: 'test-123',
-// role: 'ADMIN',
-// provider: 'password'
-// };
+// For easier testing, enable this demo admin user
+const initState = {
+  id: 'test-admin-123',
+  role: 'ADMIN',
+  provider: 'password'
+};
 
 export default (state = initState, action) => {
   switch (action.type) {

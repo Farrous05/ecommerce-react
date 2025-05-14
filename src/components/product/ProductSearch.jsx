@@ -49,6 +49,7 @@ const ProductSearch = () => {
       <div className="product-search-header">
         <h3 onClick={history.goBack} role="presentation">
           <i className="fa fa-chevron-left" />
+          <span>Back</span>
         </h3>
         <div className="product-search-wrapper">
           <input
@@ -59,14 +60,16 @@ const ProductSearch = () => {
             ref={searchInput}
             type="text"
           />
-          <div className="searchbar-icon" />
+          <div className="searchbar-icon">
+            <i className="fa fa-search" />
+          </div>
         </div>
       </div>
       <div className="product-search-body">
         <div className="product-search-recent">
           <div className="product-search-recent-header">
             <h5>Recent Searches</h5>
-            <h5 onClick={onClearRecentSearch} style={{ color: 'red' }} role="presentation">
+            <h5 onClick={onClearRecentSearch} role="presentation">
               Clear
             </h5>
           </div>

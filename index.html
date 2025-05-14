@@ -3,10 +3,50 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Salinaka - React Ecommerce Store</title>
     <link rel="icon" type="image/png" href="/static/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Ensure mobile navigation icons are visible */
+        @media (max-width: 480px) {
+            .mobile-navigation-icon, 
+            .mobile-navigation-item {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 100 !important;
+            }
+            
+            .mobile-navigation-icons {
+                display: flex !important;
+                visibility: visible !important;
+            }
+            
+            .mobile-navigation-main {
+                display: flex !important;
+                justify-content: space-between !important;
+            }
+            
+            .mobile-navigation-logo {
+                flex: 1 !important;
+            }
+
+            .mobile-navigation-icon svg {
+                font-size: 22px !important;
+            }
+
+            .anticon {
+                display: inline-flex !important;
+            }
+        }
+    </style>
 </head>
 
 <body>

@@ -1,34 +1,232 @@
-.searchbar {
-  width: 400px;
+.searchbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: map-get($z-index, 'modal');
   display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.3s, opacity 0.3s ease;
+
+  &.is-open-searchbar {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.3s ease;
+  }
+}
+
+.searchbar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.searchbar-content {
+  width: 100%;
+  max-width: 600px;
+  padding: $l-size;
+  background-color: $white;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   position: relative;
+  z-index: 1;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+
+  .is-open-searchbar & {
+    transform: translateY(0);
+  }
+}
+
+.searchbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $m-size;
+
+  h3 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .searchbar-close {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $gray-20;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $black;
+    }
+  }
+}
+
+.searchbar {
+  width: 100%;
+  position: relative;
+  background: $white;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+
+  .searchbar-icon {
+    position: absolute;
+    top: 50%;
+    left: 1.6rem;
+    font-size: 1.6rem;
+    color: $paragraph-color;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .searchbar-input {
+    flex-grow: 1;
+    border: 1px solid $border-color;
+    border-radius: 0.5rem;
+    outline: none;
+    padding: 1.5rem 1.5rem 1.5rem 4rem;
+    font-size: 1.6rem;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: $accent-color;
+      box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+    }
+  }
+
+  .searchbar-submit {
+    width: 100%;
+    margin-top: $m-size;
+    display: flex;
+    justify-content: flex-end;
+
+    .button {
+      min-width: 100px;
+    }
+  }
+}
+
+// SEARCHBAR RECENT
+.searchbar {
+  .searchbar-recent {
+    width: 100%;
+    background: $white;
+    position: relative;
+    z-index: map-get($z-index, 'search-recent');
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    padding: $s-size;
+    margin-top: $s-size;
+    border-radius: 0.5rem;
+    border: 1px solid $border-color;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .searchbar-recent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $s-size;
+    
+    h5 {
+      margin: 0;
+    }
+  }
+
+  .searchbar-recent-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: $s-size $m-size;
+    cursor: pointer;
+    border-radius: 4px;
+    
+    &:hover {
+      background: $background-color-01;
+    }
+  }
+
+  .searchbar-recent-button {
+    cursor: pointer;
+  }
+
+  .searchbar-recent-clear {
+    cursor: pointer;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .search-input {
-  padding-left: $xl-size !important;
+  padding-left: 4.2rem !important;
+  height: 40px;
+  border-radius: 0.8rem;
+  background-color: $white;
+  border: 1px solid $gray-30;
+  width: 100%;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    background-color: $white;
+    border-color: $black !important;
+    box-shadow: none;
+  }
+  
+  &::placeholder {
+    color: $primary-light;
+  }
 }
 
 .searchbar-input {
   width: 100%;
   background: $white;
+  padding: $s-size $m-size;
+  padding-left: 4.5rem;
+  font-size: $font-small;
+  color: $paragraph-color;
+  border: 1px solid transparent;
+  background: $background-color-01;
+  border-radius: 0.8rem;
+  transition: all .3s ease;
 }
 
 .searchbar-recent {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   left: 0;
   width: 100%;
   background: $white;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  border-radius: 0.8rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.04);
   display: none;
+  overflow: hidden;
+  z-index: 10;
+  border: 1px solid $gray-30;
 }
 
 .searchbar-recent-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 $m-size;
+  padding: $s-size $m-size;
   position: relative;
+  
+  h5 {
+    font-size: $font-small;
+    font-weight: $font-weight-medium;
+    color: $primary-dark;
+    margin: 0;
+  }
 
   &:after {
     content: '';
@@ -37,14 +235,21 @@
     left: 0;
     right: 0;
     margin: auto;
-    width: 94%;
+    width: 100%;
     height: 1px;
-    background: $border-color;
+    background: $gray-30;
   }
 }
 
-.searchbar-recent-clear:hover {
-  cursor: pointer;
+.searchbar-recent-clear {
+  font-size: $font-xsmall;
+  color: $primary-medium;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    cursor: pointer;
+    color: $primary-dark;
+  }
 }
 
 .searchbar-recent-wrapper {
@@ -53,9 +258,10 @@
   align-items: center;
   padding: 0 $m-size;
   padding-right: 0;
+  transition: background-color 0.2s ease;
 
   &:hover {
-    background: $border-color;
+    background: $gray-40;
     cursor: pointer;
   }
 }
@@ -63,11 +269,20 @@
 .searchbar-recent-keyword {
   flex-grow: 1;
   padding: $s-size 0;
+  font-size: $font-small;
+  color: $primary-medium;
 }
 
 .searchbar-recent-button {
-  font-weight: bold;
+  font-weight: $font-weight-medium;
   padding: $s-size;
+  color: $primary-light;
+  font-size: $font-xsmall;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: $primary-dark;
+  }
 }
 
 .searchbar-icon {
@@ -76,6 +291,86 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  color: #7a7a7a;
+  color: $primary-light;
   font-size: 1.6rem;
+  z-index: 1;
+}
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10rem;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.search-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-overlay-content {
+  width: 600px;
+  max-width: 90%;
+  background: $white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.search-overlay-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: $primary-medium;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: $black;
+  }
+}
+
+// Firebase index message
+.firebase-index-message {
+  background-color: $white;
+  border: 1px solid $gray-30;
+  padding: 2.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: center;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  h3 {
+    margin-bottom: 1.5rem;
+    color: $primary-dark;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: $primary-medium;
+  }
+
+  .button {
+    margin: 1rem auto 2rem;
+    display: inline-block;
+  }
+
+  .firebase-index-note {
+    font-size: $font-small;
+    color: $primary-light;
+    font-style: italic;
+  }
 }

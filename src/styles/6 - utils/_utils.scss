@@ -257,3 +257,128 @@
 .underline {
   text-decoration: underline;
 }
+
+// General utility classes for better mobile display
+.mobile-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+  @include mobile {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+  
+  @include small-mobile {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.mobile-fit {
+  max-width: 100%;
+  width: auto !important;
+}
+
+.overflow-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  scrollbar-width: none;
+  padding-bottom: 5px; /* Prevents bottom cut-off */
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mobile-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+// For elements that are too wide on mobile
+.mobile-wrap {
+  @include mobile {
+    white-space: normal !important;
+    word-break: break-word;
+  }
+}
+
+// Fix for images that break layout on mobile
+.mobile-img-fix {
+  @include mobile {
+    max-width: 100%;
+    height: auto !important;
+    object-fit: contain;
+  }
+}
+
+// Adjust flex items for mobile
+.flex-mobile-wrap {
+  @include mobile {
+    flex-wrap: wrap !important;
+  }
+}
+
+.flex-mobile-column {
+  @include mobile {
+    flex-direction: column !important;
+  }
+}
+
+// Responsive display utilities
+.d-none-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.d-flex-mobile {
+  @include mobile {
+    display: flex !important;
+  }
+}
+
+// Spacing adjustments for mobile
+.mobile-my-1 {
+  @include mobile {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+.mobile-mx-1 {
+  @include mobile {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+  }
+}
+
+.mobile-p-1 {
+  @include mobile {
+    padding: 0.5rem !important;
+  }
+}
+
+.mobile-p-0 {
+  @include mobile {
+    padding: 0 !important;
+  }
+}
+
+.mobile-m-0 {
+  @include mobile {
+    margin: 0 !important;
+  }
+}
+
+// Improved touch target sizes for mobile
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
